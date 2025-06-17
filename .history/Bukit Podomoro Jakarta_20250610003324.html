@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bukit Podomoro Jakarta</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: rgba(4, 136, 83, 0.47);
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Login Section */
+        #login {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: url('gambar/beranda.png') no-repeat center/cover;
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 1.25rem;
+            padding: 2.5rem;
+            width: min(90%, 400px);
+            text-align: center;
+            color: #000000;
+        }
+
+        .login-container h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+        }
+
+        .login-form .form-group {
+            margin-bottom: 1.25rem;
+            text-align: left;
+        }
+
+        .login-form .form-group label {
+            font-size: 1.125rem;
+            margin-bottom: 0.3125rem;
+            display: block;
+        }
+
+        .login-form .form-group input {
+            width: 100%;
+            padding: 0.625rem;
+            border-radius: 5px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+        }
+
+        .login-button {
+            background: rgba(4, 136, 83, 0.47);
+            color: white;
+            border: none;
+            padding: 0.625rem 1.25rem;
+            font-size: 1.125rem;
+            border-radius: 1.25rem;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s;
+        }
+
+        .login-button:hover {
+            background: rgba(4, 136, 83, 0.7);
+        }
+
+        /* Hide main content initially */
+        #mainContent {
+            display: none;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 3.125rem;
+            background-color: rgba(4, 136, 83, 0.8);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.875rem;
+        }
+
+        .nav-links a, .logout-button {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover, .nav-links a.active, .logout-button:hover {
+            font-weight: 700;
+            transform: scale(1.05);
+        }
+
+        /* Sections */
+        .section {
+            min-height: 100vh;
+            padding: 6.25rem 3.125rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* Home Section */
+        #home {
+            background: url('gambar/beranda.png') no-repeat center/cover;
+            text-align: left;
+        }
+
+        .home-content {
+            max-width: 600px;
+            margin-top: 5rem;
+        }
+
+        .home-content h1 {
+            font-size: 3.25rem;
+            font-weight: 700;
+            line-height: 4.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .home-content p {
+            font-size: 1rem;
+            line-height: 1.5rem;
+        }
+
+        .home-content p span {
+            font-weight: 700;
+        }
+
+        /* Features Section */
+        #features {
+            background-color: rgba(4, 136, 83, 0.47);
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+            color: #ffffff;
+        }
+
+        .view {
+            display: none;
+        }
+
+        .view.active {
+            display: block;
+        }
+
+        .questionnaire-container {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 1.25rem;
+            width: min(90%, 55.25rem);
+            margin: 0 auto;
+            padding: 1.25rem;
+            text-align: left;
+        }
+
+        .pre-questionnaire-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.25rem;
+            color: #000000;
+        }
+
+        .pre-questionnaire-form h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.625rem;
+        }
+
+        .form-group {
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 1.125rem;
+            margin-bottom: 0.3125rem;
+        }
+
+        .form-group input, .question select {
+            width: 100%;
+            padding: 0.625rem;
+            border-radius: 5px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+        }
+
+        .question {
+            color: #000000;
+            font-size: 1.125rem;
+            margin: 1.25rem 0;
+        }
+
+        .submit-questionnaire, .start-button {
+            background: rgba(217, 217, 217, 0.6);
+            border-radius: 1.25rem;
+            padding: 0.625rem 1.25rem;
+            color: #000000;
+            font-size: 1.125rem;
+            border: none;
+            cursor: pointer;
+            margin-top: 1.25rem;
+            transition: background 0.3s;
+        }
+
+        .submit-questionnaire:hover, .start-button:hover {
+            background: rgba(217, 217, 217, 0.8);
+        }
+
+        /* Recommendations Section */
+        #recommendations {
+            background-color: rgba(4, 136, 83, 0.2);
+            padding-bottom: 3.125rem;
+        }
+
+        .properties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.875rem;
+            margin-top: 3.125rem;
+        }
+
+        .property-card {
+            background: white;
+            border-radius: 2.1875rem;
+            padding: 1.25rem;
+            color: #000000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .property-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .property-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 1.5625rem;
+            margin-bottom: 0.9375rem;
+        }
+
+        .property-price {
+            font-size: 1.5rem;
+            margin-bottom: 0.9375rem;
+        }
+
+        .property-location {
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin-bottom: 0.9375rem;
+        }
+
+        .property-details {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1.25rem;
+        }
+
+        .detail {
+            text-align: center;
+        }
+
+        .detail-icon {
+            font-size: 1.5625rem;
+            margin: 0 auto 0.3125rem;
+        }
+
+        .detail-value {
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .detail-label {
+            font-size: 0.75rem;
+        }
+
+        .property-ranking {
+            position: absolute;
+            top: 0.625rem;
+            right: 0.625rem;
+            background: #00985b;
+            color: white;
+            padding: 0.3125rem 0.625rem;
+            border-radius: 0.9375rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* Property Detail Section */
+        #propertyDetail {
+            background-color: rgba(4, 136, 83, 0.2);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .property-detail-container {
+            width: min(90%, 74.719375rem);
+            background: #ffffff;
+            border-radius: 2.1875rem;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .property-main-image {
+            width: 100%;
+            max-width: 58.9375rem;
+            height: auto;
+            object-fit: cover;
+            border-radius: 1.5625rem;
+            margin: 2rem auto;
+            display: block;
+        }
+
+        .property-title {
+            color: #000000;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+        }
+
+        .back-button {
+            color: #000000;
+            font-size: 2rem;
+            font-weight: 700;
+            background: none;
+            border: none;
+            cursor: pointer;
+            position: absolute;
+            left: 1.25rem;
+            top: 1.25rem;
+        }
+
+        .copyright-text {
+            color: #ffffff;
+            font-size: 1rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .copyright-text span:nth-child(2) {
+            font-weight: 700;
+        }
+
+        /* Contact Section */
+        #contact {
+            background: #fff5f2 url('gambar/image-200.png') no-repeat center/cover;
+            position: relative;
+        }
+
+        #contact::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .contact-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-info {
+            flex: 1;
+        }
+
+        .contact-info h2 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 1.875rem;
+        }
+
+        .contact-info h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 1.875rem 0 0.9375rem;
+        }
+
+        .contact-info p {
+            font-size: 1.25rem;
+            margin-left: 1.875rem;
+            margin-bottom: 0.625rem;
+        }
+
+        .social-icon {
+            margin-left: 1.875rem;
+            width: 1.5rem;
+            height: 1.5rem;
+            vertical-align: middle;
+        }
+
+        .contact-form {
+            flex: 1;
+            background: white;
+            border-radius: 5px;
+            padding: 2.5rem;
+            color: #000000;
+        }
+
+        .contact-form h3 {
+            color: rgba(4, 136, 83, 0.47);
+            font-size: 2.375rem;
+            font-weight: 600;
+            margin-bottom: 1.875rem;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 1.25rem;
+            background: #c4c4c4;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.25rem;
+        }
+
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: rgba(4, 136, 83, 0.47);
+            color: white;
+            border: none;
+            padding: 1.25rem 2.5rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+            border-radius: 5px;
+            cursor: pointer;
+            float: right;
+            transition: background 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: rgba(4, 136, 83, 0.7);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(4, 136, 83, 0.47);
+            padding: 1.875rem 0;
+            text-align: center;
+            font-size: 0.875rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .contact-container {
+                flex-direction: column;
+            }
+
+            .contact-info, .contact-form {
+                width: 100%;
+            }
+
+            .contact-form {
+                margin-top: 3.125rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem 1.25rem;
+            }
+
+            .nav-links {
+                gap: 0.9375rem;
+            }
+
+            .home-content h1 {
+                font-size: 2.25rem;
+                line-height: 3rem;
+            }
+
+            .section {
+                padding: 5rem 1.25rem;
+            }
+
+            .section-title {
+                font-size: 2.25rem;
+            }
+
+            .property-title {
+                font-size: 1.5rem;
+            }
+
+            .back-button {
+                font-size: 1.5rem;
+            }
+
+            .properties-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-links {
+                gap: 0.625rem;
+                flex-wrap: wrap;
+            }
+
+            .home-content h1 {
+                font-size: 1.75rem;
+                line-height: 2.25rem;
+            }
+
+            .login-container h2 {
+                font-size: 1.5rem;
+            }
+
+            .login-form .form-group input {
+                font-size: 0.9rem;
+            }
+
+            .login-button {
+                font-size: 1rem;
+            }
+
+            .contact-form h3 {
+                font-size: 1.75rem;
+            }
+
+            .questionnaire-container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Section -->
+    <section id="login" aria-labelledby="login-title">
+        <div class="login-container">
+            <h2 id="login-title">Login to Bukit Podomoro Jakarta</h2>
+            <form id="loginForm" class="login-form" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" placeholder="Enter your username" required aria-required="true">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required aria-required="true">
+                </div>
+                <button type="submit" class="login-button">Login</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div id="mainContent">
+        <!-- Navigation Bar -->
+        <nav class="navbar" aria-label="Main navigation">
+            <div class="logo">Bukit Podomoro Jakarta</div>
+            <div class="nav-links">
+                <a href="#home" class="active" aria-current="page">BERANDA</a>
+                <a href="#features">FITUR</a>
+                <a href="#recommendations" onclick="displayProperties()">REKOMENDASI</a>
+                <a href="#contact">KONTAK</a>
+                <button class="logout-button" onclick="logout()" aria-label="Logout">LOGOUT</button>
+            </div>
+        </nav>
+
+        <!-- Home Section -->
+        <section id="home" class="section" aria-labelledby="home-title">
+            <div class="home-content">
+                <h1 id="home-title">Membantu Temukan<br>Rumah Impian</h1>
+                <p><span>Rumah Impian</span> hadir untuk temukan rumah terbaik untukmu, untuk di jual ataupun di sewa dengan sumber terpercaya</p>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="section" aria-labelledby="features-title">
+            <h2 class="section-title" id="features-title">Fitur</h2>
+            <div id="preQuestionnaireView" class="view active">
+                <div class="questionnaire-container">
+                    <form id="preQuestionnaireForm" class="pre-questionnaire-form" onsubmit="startQuestionnaire(event)">
+                        <h3>Masukkan Informasi Anda</h3>
+                        <div class="form-group">
+                            <label for="name">Nama:</label>
+                            <input type="text" id="name" name="name" placeholder="Masukkan nama Anda" required aria-required="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Nomor Telepon:</label>
+                            <input type="tel" id="phone" name="phone" placeholder="Masukkan nomor telepon" required aria-required="true">
+                        </div>
+                        <button type="submit" class="start-button">Start</button>
+                    </form>
+                </div>
+            </div>
+            <div id="formView" class="view">
+                <div class="questionnaire-container">
+                    <form id="questionnaireForm">
+                        <div class="question">
+                            <p>1. Pilih tipe luas bangunan yang Anda inginkan</p>
+                            <select id="buildingSize" name="buildingType" aria-label="Building size">
+                                <option value="123 m2">123 m²</option>
+                                <option value="138 m2">138 m²</option>
+                                <option value="146 m2">146 m²</option>
+                                <option value="180 m2">180 m²</option>
+                                <option value="193 m2">193 m²</option>
+                                <option value="197 m2">197 m²</option>
+                                <option value="223 m2">223 m²</option>
+                                <option value="231 m2">231 m²</option>
+                            </select>
+                        </div>
+                        <div class="question">
+                            <p>2. Pilih tipe cluster yang Anda inginkan</p>
+                            <select id="clusterType" name="clusterType" aria-label="Cluster type">
+                                <option value="Classic">Classic</option>
+                                <option value="Wales">Wales</option>
+                                <option value="ART Deco">ART Deco</option>
+                                <option value="Regent">Regent</option>
+                                <option value="Windsor">Windsor</option>
+                                <option value="Royal">Royal</option>
+                                <option value="Luxury Classic">Luxury Classic</option>
+                                <option value="Luxury ART Deco">Luxury ART Deco</option>
+                            </select>
+                        </div>
+                        <div class="question">
+                            <p>3. Seberapa dekat posisi rumah dari gerbang utama</p>
+                            <select id="proximity" name="proximity" aria-label="Proximity to main gate">
+                                <option value="Sangat dekat">5km</option>
+                                <option value="Cukup dekat">10km</option>
+                                <option value="Sangat jauh">15km</option>
+                            </select>
+                        </div>
+                        <div class="question">
+                            <p>4. Berapa jumlah anggota keluarga</p>
+                            <select id="familyMembers" name="familySize" aria-label="Family size">
+                                <option value="5 orang">5 orang</option>
+                                <option value="6 orang">6 orang</option>
+                                <option value="8 orang">8 orang</option>
+                                <option value="9 orang">9 orang</option>
+                            </select>
+                        </div>
+                        <div class="question">
+                            <p>5. Pilih konfigurasi kamar</p>
+                            <select id="bedrooms" name="bedrooms" aria-label="Bedroom configuration">
+                                <option value="3+1">3+1</option>
+                                <option value="4+1">4+1</option>
+                            </select>
+                        </div>
+                        <div class="question">
+                            <p>6. Berapa kisaran budget Anda?</p>
+                            <select id="budget" name="budget" aria-label="Budget range">
+                                <option value="40000000000">Rp 40M - Rp 55M</option>
+                                <option value="55000000000">Rp 55M - Rp 70M</option>
+                                <option value="70000000000">Rp 70M - Rp 85M</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="submit-questionnaire">Submit</button>
+                    </form>
+                </div>
+            </div>
+            <div id="recommendationView" class="view">
+                <div class="questionnaire-container">
+                    <h3>Rekomendasi Property untuk Anda</h3>
+                    <div id="recommendationText" style="color: #000000; text-align: 1rem;"></div>
+                    <button class="submit-questionnaire" onclick="showPreQuestionnaire()">Kembali</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recommendations Section -->
+        <section id="recommendations" class="section" aria-labelledby="recommendations-title">
+            <h2 class="section-title" id="recommendations-title">Rekomendasi</h2>
+            <div class="properties-grid" id="propertiesGrid"></div>
+        </section>
+
+        <!-- Property Detail Section -->
+        <section id="propertyDetail" class="section" aria-labelledby="detailLocation">
+            <div class="property-detail-container">
+                <button class="back-button" onclick="hidePropertyDetail()" aria-label="Back to Recommendations"><</button>
+                <h2 class="property-title" id="detailLocation"></h2>
+                <img id="detailImage" src="" alt="Property Image" class="property-main-image">
+                <div class="copyright-text">
+                    <span>Copyright by</span>
+                    <span>Bukit Podomoro Jakarta</span>
+                    <span>All Right Reserved</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section" aria-labelledby="contact-title">
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h2 id="contact-title">Butuh Konsultasi..?<br>Silahkan kontak kami<br>Kami Siap Membantu</h2>
+                    <h3>Kontak</h3>
+                    <p>+62 811-995-888</p>
+                    <h3>Social Media</h3>
+                    <p>
+                        <img src="gambar/instagram.png" alt="Instagram" class="social-icon">
+                        @bukitpodomoro
+                    </p>
+                    <div class="address-section">
+                        <div class="address-title">Alamat Kami:</div>
+                        <div class="address-text">
+                            Jl. I Gusti Ngurah Rai No.20, RT.12/RW.1, Klender,<br>
+                            Kec. Duren Sawit, Kota Jakarta Timur,<br>
+                            Daerah Khusus Ibukota Jakarta 13470
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <h3>Apakah ada pertanyaan??</h3>
+                    <form id="contactForm" onsubmit="return handleFormSubmit(event)">
+                        <div class="form-group">
+                            <input type="email" name="email" placeholder="Masukan email anda disini..." required aria-required="true">
+                        </div>
+                        <div class="form-group">
+                            <textarea name="question" placeholder="Pertanyaan Anda.." required aria-required="true"></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Kirim</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer aria-label="Footer">
+            <div>Copyright by Bukit Podomoro Jakarta All Right Reserved</div>
+        </footer>
+    </div>
+
+    <script>
+        // Simple user credentials for demo purposes
+        const validCredentials = {
+            username: "user",
+            password: "user123"
+        };
+
+        // Property data with corrected prices
+        const properties = [
+            { price: 40000000000, area: "146 m2", tanah: "90 m2", bedrooms: "3+1", bathrooms: "3+1",capacity:"5 orang", image: "gambar\6 Classic.png", ranking: 1, cluster: "Classic" },
+            { price: 45000000000, area: "123 m2", tanah: "90 m2", bedrooms: "3+1", bathrooms: "3+1", capacity: "5 orang", image: "gambar/TIPE 6 WALES.png", ranking: 2, cluster: "Wales" },
+            { price: 50000000000, area: "180 m2", tanah: "105 m2", bedrooms: "4+1", bathrooms: "4+1", capacity: "8 orang", image: "gambar/TIPE 7 CLASSIC.png", ranking: 3, cluster: "Classic" },
+            { price: 55000000000, area: "180 m2", tanah: "105 m2", bedrooms: "4+1", bathrooms: "4+1", capacity: "8 orang", image: "gambar/TIPE 7 ART DECO.png", ranking: 4, cluster: "ART Deco" },
+            { price: 60000000000, area: "193 m2", tanah: "105 m2", bedrooms: "4+1", bathrooms: "4+1", capacity: "8 orang", image: "gambar/TIPE 7 REGENT.png", ranking: 5, cluster: "Regent" },
+            { price: 65000000000, area: "138 m2", tanah: "105 m2", bedrooms: "4+1", bathrooms: "3+1", capacity: "6 orang", image: "gambar/TIPE 7 WINDSOR.png", ranking: 6, cluster: "Windsor" },
+            { price: 70000000000, area: "231 m2", tanah: "136 m2", bedrooms: "4+1", bathrooms: "4+1", capacity: "9 orang", image: "gambar/TIPE 8 CLASSIC.png", ranking: 7, cluster: "Classic" },
+            { price: 75000000000, area: "223 m2", tanah: "120 m2", bedrooms: "4+1", bathrooms: "4+1", capacity: "9 orang", image: "gambar/TIPE 8 ROYAL.png", ranking: 8, cluster: "Royal" },
+            { price: 80000000000, area: "197 m2", tanah: "117 m2", bedrooms: "4+1", bathrooms: "4+1", capacity: "8 orang", image: "gambar/TIPE 9.png", ranking: 9, cluster: "Luxury Classic" },
+            { type: "9 Luxury ART Deco", price: 85000000000, area: "197 m2", tanah: "117 m2", bedrooms: "4+1", bathrooms: "4+1", capacity: "8 orang", image: "gambar/TIPE 9.png", ranking: 10, cluster: "Luxury ART Deco" }
+        ];
+
+        // Display all properties in Recommendations section
+        function displayProperties() {
+            const propertiesGrid = document.getElementById('propertiesGrid');
+            propertiesGrid.innerHTML = properties.map(property => `
+                <div class="property-card" data-type="${property.type}" onclick="showPropertyDetail('${property.type}', 'Rp ${property.price.toLocaleString('id-ID')}', '${property.area}', '${property.bedrooms}', '${property.bathrooms}', '${property.image}')">
+                    <div class="property-ranking">Peringkat ${property.ranking}</div>
+                    <img src="${property.image}" alt="${property.type}" class="property-image">
+                    <div class="property-location">${property.type}</div>
+                    <div class="property-price">Rp ${property.price.toLocaleString('id-ID')}</div>
+                    <div class="property-details">
+                        <div class="detail">
+                            <div class="detail-icon">🛏️</div>
+                            <div class="detail-value">${property.bedrooms}</div>
+                            <div class="detail-label">Kamar Tidur</div>
+                        </div>
+                        <div class="detail">
+                            <div class="detail-icon">🛁</div>
+                            <div class="detail-value">${property.bathrooms}</div>
+                            <div class="detail-label">Kamar Mandi</div>
+                        </div>
+                        <div class="detail">
+                                <div class="detail-icon">👩🏻‍🤝‍👨🏻</div>
+                                <div class="detail-value">${property.capacity}</div>
+                                <div class="detail-label">Kapasitas</div>
+                            </div>
+                        <div class="detail">
+                            <div class="detail-icon">🏠</div>
+                            <div class="detail-value">${property.area}</div>
+                            <div class="detail-label">Luas Bangunan</div>
+                        </div>
+                        <div class="detail">
+                            <div class="detail-icon">📏</div>
+                            <div class="detail-value">${property.tanah}</div>
+                            <div class="detail-label">Luas Tanah</div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Handle login
+        function handleLogin(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const username = formData.get('username').trim();
+            const password = formData.get('password').trim();
+
+            if (username === validCredentials.username && password === validCredentials.password) {
+                sessionStorage.setItem('isLoggedIn', 'true');
+                document.getElementById('login').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+                document.getElementById('home').scrollIntoView({ behavior: 'smooth' });
+            } else {
+                alert('Username atau password salah. Silakan coba lagi.');
+            }
+        }
+
+        // Handle logout
+        function logout() {
+            sessionStorage.clear();
+            document.getElementById('login').style.display = 'flex';
+            document.getElementById('mainContent').style.display = 'none';
+            document.getElementById('loginForm').reset();
+            document.getElementById('preQuestionnaireForm').reset();
+            document.getElementById('questionnaireForm').reset();
+            document.getElementById('recommendationView').classList.remove('active');
+            document.getElementById('formView').classList.remove('active');
+            document.getElementById('preQuestionnaireView').classList.add('active');
+            document.getElementById('propertiesGrid').innerHTML = '';
+            document.getElementById('recommendationText').innerHTML = '';
+            document.getElementById('propertyDetail').style.display = 'none';
+        }
+
+        // Check login status on page load
+        window.addEventListener('load', () => {
+            if (sessionStorage.getItem('isLoggedIn') === 'true') {
+                document.getElementById('login').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+            }
+        });
+
+        // View toggle for questionnaire
+        function toggleView(activeView) {
+            ['preQuestionnaireView', 'formView', 'recommendationView'].forEach(view => {
+                document.getElementById(view).classList.toggle('active', view === activeView);
+            });
+            document.getElementById('features').scrollIntoView({ behavior: 'smooth' });
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.toggle('active', link.getAttribute('href') === '#features');
+            });
+        }
+
+        function showPreQuestionnaire() {
+            toggleView('preQuestionnaireView');
+        }
+
+        function showForm() {
+            toggleView('formView');
+        }
+
+        function showRecommendation() {
+            toggleView('recommendationView');
+        }
+
+        // Handle pre-questionnaire submission
+        function startQuestionnaire(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const name = formData.get('name').trim();
+            const phone = formData.get('phone').trim();
+            const phonePattern = /^\+?\d{8,15}$/;
+
+            if (!name) {
+                alert('Silakan masukkan nama Anda.');
+                return;
+            }
+            if (!phonePattern.test(phone)) {
+                alert('Silakan masukkan nomor telepon yang valid (8-15 digit).');
+                return;
+            }
+
+            sessionStorage.setItem('userName', name);
+            sessionStorage.setItem('userPhone', phone);
+            showForm();
+        }
+
+        // Property detail functionality
+        function showPropertyDetail(location, price, area, bedrooms, bathrooms, image) {
+            document.getElementById('detailLocation').textContent = location;
+            document.getElementById('detailImage').src = image;
+            document.getElementById('detailImage').alt = `Image of ${location}`;
+            document.querySelectorAll('.section').forEach(section => {
+                section.style.display = section.id === 'propertyDetail' ? 'flex' : 'none';
+            });
+            document.querySelectorAll('.nav-links a').forEach(link => link.classList.remove('active'));
+        }
+
+        function hidePropertyDetail() {
+            document.querySelectorAll('.section').forEach(section => {
+                section.style.display = section.id === 'propertyDetail' ? 'none' : 'flex';
+            });
+            document.querySelector('a[href="#recommendations"]').classList.add('active');
+            document.getElementById('recommendations').scrollIntoView({ behavior: 'smooth' });
+            displayProperties();
+        }
+
+        // Questionnaire submission handler
+        document.getElementById('questionnaireForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            const answers = {
+                buildingType: formData.get('buildingType'),
+                clusterType: formData.get('clusterType'),
+                proximity: formData.get('proximity'),
+                familySize: formData.get('familySize'),
+                bedrooms: formData.get('bedrooms'),
+                budget: formData.get('budget')
+            };
+
+            const budgetRange = {
+                '40000000000': { min: 40000000000, max: 55000000000 },
+                '55000000000': { min: 55000000000, max: 70000000000 },
+                '70000000000': { min: 70000000000, max: 85000000000 }
+            }[answers.budget] || { min: 0, max: Infinity };
+
+            const areaMap = {
+                '123 m2': { min: 123, max: 123 },
+                '138 m2': { min: 138, max: 138 },
+                '146 m2': { min: 146, max: 146 },
+                '180 m2': { min: 180, max: 180 },
+                '193 m2': { min: 193, max: 193 },
+                '197 m2': { min: 197, max: 197 },
+                '223 m2': { min: 223, max: 223 },
+                '231 m2': { min: 231, max: 231 }
+            };
+            const selectedArea = areaMap[answers.buildingType] || { min: 0, max: Infinity };
+
+            const bedroomMap = {
+                '5 orang': '3+1',
+                '6 orang': '4+1',
+                '8 orang': '4+1',
+                '9 orang': '4+1'
+            };
+            const requiredBedrooms = bedroomMap[answers.familySize] || answers.bedrooms;
+
+            const filteredProperties = properties
+                .filter(property => {
+                    const areaNum = parseFloat(property.area);
+                    return (
+                        property.price >= budgetRange.min &&
+                        property.price <= budgetRange.max &&
+                        areaNum >= selectedArea.min &&
+                        areaNum <= selectedArea.max &&
+                        property.bedrooms === requiredBedrooms &&
+                        property.capacity === answers.familySize &&
+                        property.cluster === answers.clusterType
+                    );
+                })
+                .sort((a, b) => a.ranking - b.ranking);
+
+            const recommendationText = document.getElementById('recommendationText');
+            const userName = sessionStorage.getItem('userName') || 'Pengguna';
+            if (filteredProperties.length === 0) {
+                recommendationText.innerHTML = `<p>Halo ${userName}, tidak ada properti yang sesuai dengan kriteria Anda.</p>`;
+            } else {
+                let recommendation = `Halo ${userName}, berdasarkan pilihan Anda, kami merekomendasikan:<br>`;
+                recommendation += `- Luas bangunan: ${answers.buildingType}<br>`;
+                recommendation += `- Tipe cluster: ${answers.clusterType}<br>`;
+                recommendation += `- Jarak dari gerbang: ${answers.proximity}<br>`;
+                recommendation += `- Jumlah anggota keluarga: ${answers.familySize}<br>`;
+                recommendation += `- Konfigurasi kamar: ${answers.bedrooms}<br>`;
+                recommendation += `- Budget: Rp ${parseInt(answers.budget).toLocaleString('id-ID')} - Rp ${budgetRange.max.toLocaleString('id-ID')}<br><br>`;
+                recommendation += `Rekomendasi rumah:<br>`;
+                filteredProperties.forEach(property => {
+                    recommendation += `- ${property.type} (Harga: Rp ${property.price.toLocaleString('id-ID')}, Luas: ${property.area}, Kamar: ${property.bedrooms})<br>`;
+                });
+                recommendationText.innerHTML = recommendation;
+            }
+
+            const propertiesGrid = document.getElementById('propertiesGrid');
+            propertiesGrid.innerHTML = filteredProperties.length === 0
+                ? '<p style="color: #000; text-align: center;">Tidak ada properti yang sesuai dengan kriteria Anda.</p>'
+                : filteredProperties.map(property => `
+                    <div class="property-card" data-type="${property.type}" onclick="showPropertyDetail('${property.type}', 'Rp ${property.price.toLocaleString('id-ID')}', '${property.area}', '${property.bedrooms}', '${property.bathrooms}', '${property.capacity}', ${property.image}')">
+                        <div class="property-ranking">Peringkat ${property.ranking}</div>
+                        <img src="${property.image}" alt="${property.type}" class="property-image">
+                        <div class="property-location">${property.type}</div>
+                        <div class="property-price">Rp ${property.price.toLocaleString('id-ID')}</div>
+                        <div class="property-details">
+                            <div class="detail">
+                                <div class="detail-icon">🛏️</div>
+                                <div class="detail-value">${property.bedrooms}</div>
+                                <div class="detail-label">Kamar Tidur</div>
+                            </div>
+                            <div class="detail">
+                                <div class="detail-icon">🛁</div>
+                                <div class="detail-value">${property.bathrooms}</div>
+                                <div class="detail-label">Kamar Mandi</div>
+                            </div>
+                            <div class="detail">
+                                <div class="detail-icon">👩🏻‍🤝‍👨🏻</div>
+                                <div class="detail-value">${property.capacity}</div>
+                                <div class="detail-label">Kapasitas</div>
+                            </div>
+                            <div class="detail">
+                                <div class="detail-icon">🏠</div>
+                                <div class="detail-value">${property.area}</div>
+                                <div class="detail-label">Luas Bangunan</div>
+                            </div>
+                            <div class="detail">
+                                <div class="detail-icon">📏</div>
+                                <div class="detail-value">${property.tanah}</div>
+                                <div class="detail-label">Luas Tanah</div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+
+            showRecommendation();
+        });
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                if (targetId !== 'propertyDetail') {
+                    document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+                    document.querySelectorAll('.nav-links a').forEach(link => {
+                        link.classList.toggle('active', link === this);
+                    });
+                }
+            });
+        });
+
+        // Highlight current section in nav
+        window.addEventListener('scroll', () => {
+            if (document.getElementById('propertyDetail').style.display === 'flex') return;
+            const scrollPosition = window.scrollY;
+            document.querySelectorAll('.section').forEach(section => {
+                if (
+                    section.id !== 'propertyDetail' &&
+                    scrollPosition >= section.offsetTop - 100 &&
+                    scrollPosition < section.offsetTop + section.offsetHeight - 100
+                ) {
+                    document.querySelectorAll('.nav-links a').forEach(link => {
+                        link.classList.toggle('active', link.getAttribute('href') === `#${section.id}`);
+                    });
+                }
+            });
+        });
+
+        // Form submission handler
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            const form = event.target;
+            const email = form.querySelector('input[name="email"]').value.trim();
+            const question = form.querySelector('textarea[name="question"]').value.trim();
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (!emailPattern.test(email)) {
+                alert('Silakan masukkan alamat email yang valid.');
+                return false;
+            }
+            if (!question) {
+                alert('Silakan masukkan pertanyaan Anda.');
+                return false;
+            }
+
+            alert(`Terima kasih! Email: ${email}\nPertanyaan: ${question}`);
+            form.reset();
+            return false;
+        }
+    </script>
+</body>
+</html>

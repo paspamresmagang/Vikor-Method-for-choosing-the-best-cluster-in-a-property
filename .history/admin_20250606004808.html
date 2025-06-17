@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Bukit Podomoro Jakarta</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, rgba(4, 136, 83, 0.1), rgba(255, 255, 255, 0.5));
+            color: #333;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            background: linear-gradient(to right, #048853, #036944);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #d1e8d5;
+            font-weight: 600;
+        }
+
+        /* Sections */
+        .section {
+            min-height: 100vh;
+            padding: 120px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Login Section */
+        #adminLogin {
+            background: transparent;
+        }
+
+        .login-container {
+            background: #fff;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 400px;
+            padding: 40px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .login-container h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #048853;
+            margin-bottom: 20px;
+        }
+
+        .login-form .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .login-form label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .login-form input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            transition: border-color 0.3s ease;
+        }
+
+        .login-form input:focus {
+            border-color: #048853;
+            outline: none;
+        }
+
+        .login-form button {
+            background: #048853;
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s ease;
+        }
+
+        .login-form button:hover {
+            background: #036944;
+        }
+
+        /* Dashboard Section */
+        #adminDashboard {
+            display: none;
+            background: transparent;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #048853;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .dashboard-container {
+            background: #fff;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 1000px;
+            padding: 30px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .dashboard-tabs {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+
+        .tab-button {
+            background: #e0e0e0;
+            border-radius: 8px;
+            padding: 10px 20px;
+            color: #333;
+            font-size: 1rem;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab-button.active,
+        .tab-button:hover {
+            background: #048853;
+            color: #fff;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Property Management */
+        .property-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .property-table th,
+        .property-table td {
+            border: 1px solid #e0e0e0;
+            padding: 12px;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        .property-table th {
+            background: #048853;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .property-table tr {
+            transition: background 0.3s ease;
+        }
+
+        .property-table tr:hover {
+            background: #f5f5f5;
+        }
+
+        .action-buttons button {
+            padding: 8px 12px;
+            margin-right: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: opacity 0.3s ease;
+        }
+
+        .edit-btn {
+            background: #007bff;
+            color: #fff;
+        }
+
+        .delete-btn {
+            background: #dc3545;
+            color: #fff;
+        }
+
+        .action-buttons button:hover {
+            opacity: 0.9;
+        }
+
+        /* Property Form */
+        .property-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .property-form .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .property-form label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .property-form input,
+        .property-form select {
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            transition: border-color 0.3s ease;
+        }
+
+        .property-form input:focus,
+        .property-form select:focus {
+            border-color: #048853;
+            outline: none;
+        }
+
+        .property-form button {
+            background: #048853;
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            grid-column: span 2;
+            transition: background 0.3s ease;
+        }
+
+        .property-form button:hover {
+            background: #036944;
+        }
+
+        /* Submissions Table */
+        .submissions-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .submissions-table th,
+        .submissions-table td {
+            border: 1px solid #e0e0e0;
+            padding: 12px;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        .submissions-table th {
+            background: #048853;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .submissions-table tr:hover {
+            background: #f5f5f5;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(to right, #048853, #036944);
+            padding: 20px 0;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #fff;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .dashboard-container {
+                max-width: 90%;
+            }
+
+            .login-container {
+                max-width: 500px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .nav-links {
+                gap: 15px;
+            }
+
+            .nav-links a {
+                font-size: 0.9rem;
+            }
+
+            .section {
+                padding: 80px 20px;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .property-form {
+                grid-template-columns: 1fr;
+            }
+
+            .property-table,
+            .submissions-table {
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-links {
+                gap: 10px;
+            }
+
+            .login-container {
+                padding: 20px;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .property-table,
+            .submissions-table {
+                font-size: 0.8rem;
+            }
+
+            .action-buttons button {
+                padding: 6px 8px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">Admin - Bukit Podomoro Jakarta</div>
+        <div class="nav-links">
+            <a href="#adminLogin" class="active">Login</a>
+            <a href="#adminDashboard" id="dashboardLink" style="display: none;">Dashboard</a>
+            <a href="#" onclick="logout()">Logout</a>
+        </div>
+    </nav>
+
+    <!-- Admin Login Section -->
+    <section id="adminLogin" class="section">
+        <div class="login-container">
+            <h2>Admin Login</h2>
+            <form id="adminLoginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="adminUsername">Username</label>
+                    <input type="text" id="adminUsername" name="username" placeholder="Enter username" required>
+                </div>
+                <div class="form-group">
+                    <label for="adminPassword">Password</label>
+                    <input type="password" id="adminPassword" name="password" placeholder="Enter password" required>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Admin Dashboard Section -->
+    <section id="adminDashboard" class="section">
+        <h2 class="section-title">Admin Dashboard</h2>
+        <div class="dashboard-container">
+            <div class="dashboard-tabs">
+                <button class="tab-button active" onclick="showTab('propertiesTab')">Manage Properties</button>
+                <button class="tab-button" onclick="showTab('submissionsTab')">User Submissions</button>
+            </div>
+            <div id="propertiesTab" class="tab-content active">
+                <h3>Manage Properties</h3>
+                <form id="propertyForm" class="property-form" onsubmit="addOrUpdateProperty(event)">
+                    <div class="form-group">
+                        <label for="propertyType">Property Type</label>
+                        <input type="text" id="propertyType" name="type" placeholder="e.g., 6 Classic" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="propertyPrice">Price (IDR)</label>
+                        <input type="number" id="propertyPrice" name="price" placeholder="e.g., 40000000000" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="propertyArea">Building Area</label>
+                        <input type="text" id="propertyArea" name="area" placeholder="e.g., 146 m2" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="propertyTanah">Land Area</label>
+                        <input type="text" id="propertyTanah" name="tanah" placeholder="e.g., 90 m2" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="propertyBedrooms">Bedrooms</label>
+                        <select id="propertyBedrooms" name="bedrooms" required>
+                            <option value="3+1">3+1</option>
+                            <option value="4+1">4+1</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="propertyBathrooms">Bathrooms</label>
+                        <select id="propertyBathrooms" name="bathrooms" required>
+                            <option value="3+1">3+1</option>
+                            <option value="4+1">4+1</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="propertyCapacity">Capacity</label>
+                        <select id="propertyCapacity" name="capacity" required>
+                            <option value="4 orang">4 orang</option>
+                            <option value="5 orang">5 orang</option>
+                            <option value="6 orang">6 orang</option>
+                            <option value="8 orang">8 orang</option>
+                            <option value="9 orang">9 orang</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="propertyImage">Image Path</label>
+                        <input type="text" id="propertyImage" name="image" placeholder="e.g., gambar/TIPE 6 CLASSIC.png" required>
+                    </div>
+                    <input type="hidden" id="propertyIndex" name="index">
+                    <button type="submit">Add Property</button>
+                </form>
+                <table class="property-table">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Price (IDR)</th>
+                            <th>Area</th>
+                            <th>Land</th>
+                            <th>Bedrooms</th>
+                            <th>Bathrooms</th>
+                            <th>Capacity</th>
+                            <th>Image</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="propertyTableBody"></tbody>
+                </table>
+            </div>
+            <div id="submissionsTab" class="tab-content">
+                <h3>User Submissions</h3>
+                <table class="submissions-table">
+                    <thead>
+                        <tr>
+                            <th>Email</th>
+                            <th>Question</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="submissionsTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="copyright-by-ce-vi-za-all-right-reserved">Copyright by Bukit Podomoro Jakarta All Right Reserved</div>
+    </footer>
+
+    <script>
+        // Initial property data
+        let properties = [
+            { type: "6 Classic", price: 40000000000, area: "146 m2", tanah: "90 m2", bedrooms: "3+1", bathrooms: "3+1", image: "gambar/TIPE 6 CLASSIC.png", ranking: 1, capacity: "5 orang" },
+            { type: "6 Wales", price: 45000000000, area: "123 m2", tanah: "90 m2", bedrooms: "3+1", bathrooms: "3+1", image: "gambar/TIPE 6 WALES.png", ranking: 2, capacity: "5 orang" },
+            { type: "7 Classic", price: 50000000000, area: "180 m2", tanah: "105 m2", bedrooms: "4+1", bathrooms: "4+1", image: "gambar/TIPE 7 CLASSIC.png", ranking: 3, capacity: "8 orang" },
+            { type: "7 ART Deco", price: 55000000000, area: "180 m2", tanah: "105 m2", bedrooms: "4+1", bathrooms: "4+1", image: "gambar/TIPE 7 ART DECO.png", ranking: 4, capacity: "8 orang" },
+            { type: "7 Regent", price: 60000000000, area: "193 m2", tanah: "105 m2", bedrooms: "4+1", bathrooms: "4+1", image: "gambar/TIPE 7 REGENT.png", ranking: 5, capacity: "8 orang" },
+            { type: "7 Windsor", price: 65000000000, area: "138 m2", tanah: "105 m2", bedrooms: "4+1", bathrooms: "3+1", image: "gambar/TIPE 7 WINDSOR.png", ranking: 6, capacity: "6 orang" },
+            { type: "8 Classic", price: 70000000, area: "231 m2", tanah: "136 m2", bedrooms: "4+1", bathrooms: "4+1", image: "gambar/TIPE 8 CLASSIC.png", ranking: 7, capacity: "9 orang" },
+            { type: "8 Royal", price: 75000000, area: "223 m2", tanah: "120 m2", bedrooms: "4+1", bathrooms: "4+1", image: "gambar/TIPE 8 ROYAL.png", ranking: 8, capacity: "9 orang" },
+            { type: "9 Luxury Classic", price: 80000000, area: "197 m2", tanah: "117 m2", bedrooms: "4+1", bathrooms: "4+1", image: "gambar/TIPE 9.png", ranking: 9, capacity: "8 orang" },
+            { type: "9 Luxury ART Deco", price: 85000000, area: "197 m2", tanah: "117 m2", bedrooms: "4+1", bathrooms: "4+1", image: "gambar/TIPE 9.png", ranking: 10, capacity: "4 orang" }
+        ];
+
+        // Simulated user submissions storage
+        let submissions = JSON.parse(localStorage.getItem('submissions')) || [];
+
+        // Admin login handler
+        function handleLogin(event) {
+            event.preventDefault();
+            const username = document.getElementById('adminUsername').value;
+            const password = document.getElementById('adminPassword').value;
+
+            if (username === "admin" && password === "admin123") {
+                sessionStorage.setItem('isAdminLoggedIn', 'true');
+                document.getElementById('adminLogin').style.display = 'none';
+                document.getElementById('adminDashboard').style.display = 'flex';
+                document.getElementById('dashboardLink').style.display = 'block';
+                document.querySelector('.nav-links a[href="#adminLogin"]').classList.remove('active');
+                document.querySelector('.nav-links a[href="#adminDashboard"]').classList.add('active');
+                document.getElementById('adminDashboard').scrollIntoView({ behavior: 'smooth' });
+                updatePropertyTable();
+                updateSubmissionsTable();
+            } else {
+                alert('Invalid username or password');
+            }
+        }
+
+        // Logout function
+        function logout() {
+            sessionStorage.removeItem('isAdminLoggedIn');
+            document.getElementById('adminLogin').style.display = 'flex';
+            document.getElementById('adminDashboard').style.display = 'none';
+            document.getElementById('dashboardLink').style.display = 'none';
+            document.querySelector('.nav-links a[href="#adminDashboard"]').classList.remove('active');
+            document.querySelector('.nav-links a[href="#adminLogin"]').classList.add('active');
+            document.getElementById('adminLoginForm').reset();
+            document.getElementById('adminLogin').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Tab switching
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            document.querySelectorAll('.tab-button').forEach(button => button.classList.remove('active'));
+            document.querySelector(`.tab-button[onclick="showTab('${tabId}')"]`).classList.add('active');
+        }
+
+        // Update property table
+        function updatePropertyTable() {
+            const tbody = document.getElementById('propertyTableBody');
+            tbody.innerHTML = '';
+            properties.forEach((property, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${property.type}</td>
+                    <td>${property.price.toLocaleString()}</td>
+                    <td>${property.area}</td>
+                    <td>${property.tanah}</td>
+                    <td>${property.bedrooms}</td>
+                    <td>${property.bathrooms}</td>
+                    <td>${property.capacity}</td>
+                    <td>${property.image}</td>
+                    <td class="action-buttons">
+                        <button class="edit-btn" onclick="editProperty(${index})">Edit</button>
+                        <button class="delete-btn" onclick="deleteProperty(${index})">Delete</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Add or update property
+        function addOrUpdateProperty(event) {
+            event.preventDefault();
+            const form = event.target;
+            const index = form.querySelector('#propertyIndex').value;
+            const property = {
+                type: form.querySelector('#propertyType').value,
+                price: parseInt(form.querySelector('#propertyPrice').value),
+                area: form.querySelector('#propertyArea').value,
+                tanah: form.querySelector('#propertyTanah').value,
+                bedrooms: form.querySelector('#propertyBedrooms').value,
+                bathrooms: form.querySelector('#propertyBathrooms').value,
+                capacity: form.querySelector('#propertyCapacity').value,
+                image: form.querySelector('#propertyImage').value,
+                ranking: index ? properties[index].ranking : properties.length + 1
+            };
+
+            if (index) {
+                properties[index] = property;
+            } else {
+                properties.push(property);
+            }
+
+            form.reset();
+            form.querySelector('#propertyIndex').value = '';
+            form.querySelector('button').textContent = 'Add Property';
+            updatePropertyTable();
+        }
+
+        // Edit property
+        function editProperty(index) {
+            const property = properties[index];
+            document.getElementById('propertyType').value = property.type;
+            document.getElementById('propertyPrice').value = property.price;
+            document.getElementById('propertyArea').value = property.area;
+            document.getElementById('propertyTanah').value = property.tanah;
+            document.getElementById('propertyBedrooms').value = property.bedrooms;
+            document.getElementById('propertyBathrooms').value = property.bathrooms;
+            document.getElementById('propertyCapacity').value = property.capacity;
+            document.getElementById('propertyImage').value = property.image;
+            document.getElementById('propertyIndex').value = index;
+            document.getElementById('propertyForm').querySelector('button').textContent = 'Update Property';
+            document.getElementById('propertiesTab').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Delete property
+        function deleteProperty(index) {
+            if (confirm('Are you sure you want to delete this property?')) {
+                properties.splice(index, 1);
+                properties.forEach((property, i) => property.ranking = i + 1);
+                updatePropertyTable();
+            }
+        }
+
+        // Update submissions table
+        function updateSubmissionsTable() {
+            const tbody = document.getElementById('submissionsTableBody');
+            tbody.innerHTML = '';
+            submissions.forEach(submission => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${submission.email}</td>
+                    <td>${submission.question}</td>
+                    <td>${submission.date}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Simulate form submissions from user site
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            const form = event.target;
+            const email = form.querySelector('input[name="email"]').value;
+            const question = form.querySelector('textarea[name="question"]').value;
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email)) {
+                alert('Please enter a valid email address.');
+                return false;
+            }
+            if (!question.trim()) {
+                alert('Please enter your question.');
+                return false;
+            }
+            const submission = {
+                email,
+                question,
+                date: new Date().toLocaleString()
+            };
+            submissions.push(submission);
+            localStorage.setItem('submissions', JSON.stringify(submissions));
+            alert(`Thank you! Email: ${email}\nQuestion: ${question}`);
+            form.reset();
+            updateSubmissionsTable();
+            return false;
+        }
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+                document.querySelectorAll('.nav-links a').forEach(link => link.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Check login status on page load
+        window.addEventListener('load', () => {
+            if (sessionStorage.getItem('isAdminLoggedIn') === 'true') {
+                document.getElementById('adminLogin').style.display = 'none';
+                document.getElementById('adminDashboard').style.display = 'flex';
+                document.getElementById('dashboardLink').style.display = 'block';
+                document.querySelector('.nav-links a[href="#adminLogin"]').classList.remove('active');
+                document.querySelector('.nav-links a[href="#adminDashboard"]').classList.add('active');
+                updatePropertyTable();
+                updateSubmissionsTable();
+            }
+        });
+    </script>
+</body>
+</html>
